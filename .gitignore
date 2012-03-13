@@ -4,3 +4,8 @@
 *sqlite3
 *db
 *database
+__init__.py
+manage.py
+settings.py
+/templates
+urls.py
