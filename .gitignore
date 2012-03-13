@@ -1,15 +1,9 @@
 *.pyc
 *swp
 *~
-<<<<<<< HEAD
 *.sqlite3
 *.db
 *.database
-=======
-*sqlite3
-*db
-*database
->>>>>>> cc750aa3b14894c149627906de12e1ed091e1056
 __init__.py
 manage.py
 settings.py
