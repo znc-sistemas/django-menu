@@ -1,6 +1,11 @@
 *.pyc
 *swp
 *~
-*sqlite3
-*db
-*database
+*.sqlite3
+*.db
+*.database
+__init__.py
+manage.py
+settings.py
+/templates
+urls.py
