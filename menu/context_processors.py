@@ -13,3 +13,11 @@ def menu(request):
         elif request.user.has_perm(permission):
              menu.append((label, uri))
     return {'menu': menu}
+
+def submenu(request):
+    submenu = []
+    path = request.path[1:].lower()
+    for item in settings.MENU:
+        if path.startswith(item[0].lower()) and isinstance(item[1], tuple):
+            submenu = item[1]    
+    return {'submenu': submenu}
