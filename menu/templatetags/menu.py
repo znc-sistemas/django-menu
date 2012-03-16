@@ -4,6 +4,7 @@ register = template.Library()
 
 def _menuing(raw_menu, old_label=''):
     menu = ''
+    print raw_menu
     for label, link in raw_menu:
         if isinstance(link, tuple):
             if old_label:
@@ -31,7 +32,7 @@ class MenuNode(template.Node):
 
 class SubmenuNode(template.Node):
     def render(self, context):
-        return _menuing(context['submenu'], )
+        return _menuing(context['submenu'])
 
 register.tag('menu', do_menu)
 register.tag('submenu', do_submenu)
