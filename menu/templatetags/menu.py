@@ -2,22 +2,22 @@ from django import template
 
 register = template.Library()
 
-def _menuing(raw_menu, old_label=''):
+def _menuing(raw_menu, old_link=''):
     menu = ''
 
-    for label, link in raw_menu:
-        if isinstance(link, tuple):
-            if old_label:
-                menu += '<li><a href="%s">%s</a><ul>%s</ul></li>' %\
-                    (label.lower(), label, _menuing(link, old_label + '/' + label.lower()))
-            else:
-                menu += '<li><a href="%s">%s</a><ul>%s</ul></li>' %\
-                    (label.lower(), label, _menuing(link, label.lower()))
+    for label, link, active in raw_menu:
+
+        if active:
+            act = ' class="active"'
         else:
-            if old_label:
-                menu += '<li><a href="%s">%s</a></li>' % (old_label + '/' + link, label)
-            else:
-                menu += '<li><a href="%s">%s</a></li>' % (link, label)
+            act = ''
+
+        if isinstance(link, tuple):
+            # is submenu, so, I use label in link field
+            old_link = '%s/%s' % (old_link, label.lower())
+            menu += '<li%s><a href="%s">%s</a><ul>%s</ul></li>' % (act, old_link, label, _menuing(link, old_link))
+        else:
+            menu += '<li%s><a href="%s">%s</a></li>' % (act, '%s/%s' % (old_link, link), label)
     return menu
 
 def do_menu(parser, token):
