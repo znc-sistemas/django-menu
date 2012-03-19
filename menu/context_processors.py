@@ -1,8 +1,8 @@
 from django.conf import settings
 
-#ok
 def _prepare_menu(raw_menu):
     menu = []
+
     for i in raw_menu:
         i = list(i)
         if isinstance(i[1], tuple):

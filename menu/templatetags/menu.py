@@ -4,6 +4,7 @@ register = template.Library()
 
 def _menuing(raw_menu, old_label=''):
     menu = ''
+
     for label, link in raw_menu:
         if isinstance(link, tuple):
             if old_label:
