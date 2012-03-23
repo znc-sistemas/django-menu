@@ -6,11 +6,19 @@ def _prepare_menu(path, raw_menu):
     for i in raw_menu:
         active = False
         i = list(i)
+
         if isinstance(i[1], tuple):
-            i[1] = _prepare_menu(path, i[1])
+            try:
+                subpath = '/'.join(path.lower().split('/')[1:])
+            except:
+                pass
+
+            i[1] = _prepare_menu(subpath, i[1])
             i[1] = list(i[1])
+
         if len(i) == 2:
             i.append(None)
+
         if path.startswith(i[0].lower()):
             active = True
         i.append(active)
@@ -37,7 +45,12 @@ def menu(request):
 def submenu(request):
     raw_menu = [list(i) for i in settings.MENU]
     submenu = []
-    path = request.path[1:].lower()
+
+    # check if URI is /path/subpath
+    try:
+        path = '/'.join(request.path[1:].lower().split('/')[1:])
+    except:
+        path = ''
 
     for item in raw_menu:
         if request.path[1:].startswith(item[0].lower()) and isinstance(item[1], tuple):
