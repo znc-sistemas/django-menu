@@ -9,7 +9,7 @@ manage.py
 settings.py
 /templates
 urls.py
-
+teste_menu/
 *.py[co]
 
 # Packages

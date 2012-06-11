@@ -1,56 +1,44 @@
 from django.conf import settings
 
 def _prepare_menu(path, raw_menu):
-    '''
-        verifica se o menu tem submenus
-        marca menu se ativo
-        apennda NONE para menus sem submenus
-    '''
     menu = []
-    import pdb; pdb.set_trace()
+
     for i in raw_menu:
         active = False
-        
+        i = list(i)
 
-        if isinstance(i[2], list):
+        if isinstance(i[2], tuple):
             try:
                 subpath = '/'.join(path.lower().split('/')[1:])
             except:
                 pass
 
-            i[1] = _prepare_menu(subpath, i[2])
-            #i[1] = list(i[1])
+            i[2] = _prepare_menu(subpath, i[2])
+            i[2] = list(i[2])
 
-        #if len(i) == 2:
-        #    i.append(None)
-
-        if path.startswith(i[0].lower()):
+        if path.startswith(i[0]):
             active = True
         i.append(active)
+        if len(i) == 4:#adiciona permissao NONE  no final
+            i.append(None)
         menu.append(i)
-        #print "menu prepared %s" % menu
     return menu
 
 def _check_permissions(request, raw_menu):
     menu = []
-    import pdb; pdb.set_trace()
+
     for item in raw_menu:
-        
-        uri, label, submenu, active = item
-        if request.user.has_perm(uri) or request.user.is_superuser:
-            if isinstance(submenu, list):
+        uri, label,sub, active, permission = item
+        if permission ==None or request.user.has_perm(uri) or request.user.is_superuser:
+            if isinstance(uri, list):
                 uri = tuple(_check_permissions(request, uri))
             menu.append((label, uri, active))
     return menu
 
 def menu(request):
-    import pdb; pdb.set_trace()
     raw_menu = [list(i) for i in settings.MENU]
-
-    path = request.path[1:].lower()
-    #print "menu context menu %s" % raw_menu
-    menu = _check_permissions(request, _prepare_menu(path, raw_menu))
-    return {'menu': menu}
+    path = request.path[1:]
+    return {'menu': _check_permissions(request, _prepare_menu(path, raw_menu))}
 
 def submenu(request):
     raw_menu = [list(i) for i in settings.MENU]
@@ -61,12 +49,8 @@ def submenu(request):
         path = '/'.join(request.path[1:].lower().split('/')[1:])
     except:
         path = ''
+
     for item in raw_menu:
-        #print "request.path -> %s" % request.path[1:]
-        #print "item [0] -> %s" % item[0].lower()
-        #print  " item[n] starts with %s" % request.path[1:].startswith(item[0].lower())
-        #print "========================================="
-        if request.path[1:].startswith(item[0].lower()) and isinstance(item[1], tuple):
-            submenu = item[1]
-    #print "submenu = %s" %  submenu
+        if request.path[1:].startswith(item[0]) and isinstance(item[2], tuple):
+            submenu = item[2]
     return {'submenu': _check_permissions(request, _prepare_menu(path, submenu))}
