@@ -33,8 +33,8 @@ def _check_permissions(request, raw_menu):
 
         uri, label, sub, active, permission = item
         if permission == None or request.user.has_perm(uri) or request.user.is_superuser:
-            if isinstance(uri, list):
-                uri = tuple(_check_permissions(request, uri))
+            if isinstance(sub, list):
+                sub = tuple(_check_permissions(request, sub))
             menu.append((uri, label, sub,  active))
     return menu
 
