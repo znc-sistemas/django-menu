@@ -1,0 +1,4 @@
+Django==1.4
+argparse==1.2.1
+mock==0.8.0
+wsgiref==0.1.2
