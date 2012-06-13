@@ -50,3 +50,13 @@ class ContextProcessorsTests(TestCase):
         submenu_from_context = context_processors.submenu(RequestMock('/menu', UserMock('admin')))
         my_submenu = {'submenu': [['submenu', 'Submenu', None,  False]]}
         self.assertEquals(submenu_from_context, my_submenu)
+
+    def test_menu_option_should_be_activated_in_correct_path(self):
+        menu_from_context = context_processors.menu(RequestMock('/home', UserMock('user')))
+        my_menu = {'menu': [['home', 'Home', None, True], ['user', 'User', None, False], ['menu', 'O Menu', [['submenu', 'Submenu', None, False], ], False]]}
+        self.assertEquals(menu_from_context, my_menu)
+
+    def test_submenu_option_should_be_activated_in_correct_path(self):
+        menu_from_context = context_processors.menu(RequestMock('/menu/submenu', UserMock('user')))
+        my_menu = {'menu': [['home', 'Home', None, False], ['user', 'User', None, False], ['menu', 'O Menu', [['submenu', 'Submenu', None, True], ], True]]}
+        self.assertEquals(menu_from_context, my_menu)
