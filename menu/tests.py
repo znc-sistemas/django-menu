@@ -18,6 +18,7 @@ context_processors.settings.MENU = MENU_MOCK
 class UserMock(object):
     def __init__(self, username):
         self.username = username
+        self.is_superuser = username == 'admin' and True or False
 
     def has_perm(self, permission):
         if self.username == 'admin':
@@ -32,12 +33,12 @@ class RequestMock(object):
 class ContextProcessorsTests(TestCase):
     def test_menu_with_ordinary_user(self):
         menu_from_context = context_processors.menu(RequestMock('/', UserMock('user')))
-        my_menu = {'menu': [('home', 'Home', None, False), ('user', 'User', None, False), ('menu', 'O Menu', (('submenu', 'Submenu', None, False),), False)]}
+        my_menu = {'menu': [['home', 'Home', None, False], ['user', 'User', None, False], ['menu', 'O Menu', [['submenu', 'Submenu', None, False], ], False]]}
         self.assertEquals(menu_from_context, my_menu)
 
-    def test_menu_with_ordinary_user(self):
+    def test_menu_with_admin_user(self):
         menu_from_context = context_processors.menu(RequestMock('/', UserMock('admin')))
-        my_menu = {'menu': [('home', 'Home', None, False), ('user', 'User', None, False), ('menu', 'O Menu', (('submenu', 'Submenu', None, False),), False), ('admin', 'Admin', None, 'is_admin')]}
+        my_menu = {'menu': [['home', 'Home', None, False], ['user', 'User', None, False], ['menu', 'O Menu', [['submenu', 'Submenu', None, False], ], False], ['admin', 'Admin', None, False]]}
         self.assertEquals(menu_from_context, my_menu)
 
     def test_submenu_should_be_empty_list(self):
@@ -47,5 +48,5 @@ class ContextProcessorsTests(TestCase):
 
     def test_submenu_should_be_filled_list(self):
         submenu_from_context = context_processors.submenu(RequestMock('/menu', UserMock('admin')))
-        my_submenu = {'submenu': [('submenu', 'Submenu', None,  False)]}
+        my_submenu = {'submenu': [['submenu', 'Submenu', None,  False]]}
         self.assertEquals(submenu_from_context, my_submenu)
