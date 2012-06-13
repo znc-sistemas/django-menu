@@ -1,4 +1,5 @@
 from django.test import TestCase
+from mock import patch
 
 import context_processors
 
@@ -12,8 +13,6 @@ MENU_MOCK = (
                 ),
                 ('admin', 'Admin', None, 'is_admin'),
             )
-
-context_processors.settings.MENU = MENU_MOCK
 
 class UserMock(object):
     def __init__(self, username):
@@ -29,8 +28,17 @@ class RequestMock(object):
     def __init__(self, path, user):
         self.path = path
         self.user = user            
-
+ 
 class ContextProcessorsTests(TestCase):
+
+    def setUp(self):
+        self.patcher = patch('menu.context_processors.settings', create=True)
+        self.patcher.start()
+        context_processors.settings.MENU = MENU_MOCK
+
+    def tearDown(self):
+        self.patcher.stop()
+
     def test_menu_with_ordinary_user(self):
         menu_from_context = context_processors.menu(RequestMock('/', UserMock('user')))
         my_menu = {'menu': [['home', 'Home', None, False], ['user', 'User', None, False], ['menu', 'O Menu', [['submenu', 'Submenu', None, False], ], False]]}
