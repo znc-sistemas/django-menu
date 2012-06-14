@@ -8,10 +8,7 @@ def _menuing(raw_menu, old_uri=None):
 
     for uri, label, sub, active in raw_menu:
 
-        if active:
-            act = ' class="active"'
-        else:
-            act = ''
+        act = active and ' class="active"' or ''
 
         if not old_uri == None:
             full_uri = '%s/%s' % (old_uri, uri)
