@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 
-def _menuing(raw_menu, old_link=''):
+def _menuing(raw_menu, old_uri=None):
     menu = ''
 
     for uri, label, sub, active in raw_menu:
@@ -13,12 +13,16 @@ def _menuing(raw_menu, old_link=''):
         else:
             act = ''
 
-        if isinstance(sub, list):
-            # is submenu, so, I use label in link field
-            old_link = '%s/%s' % (old_link, uri.lower())
-            menu += '<li%s><a href="%s">%s</a><ul>%s</ul></li>' % (act, old_link, label, _menuing(sub, old_link))
+        if not old_uri == None:
+            full_uri = '%s/%s' % (old_uri, uri)
         else:
-            menu += '<li%s><a href="%s">%s</a></li>' % (act, '%s/%s' % (old_link, uri), label)
+            full_uri = '/%s' % uri
+
+        if isinstance(sub, list):
+            # is a real submenu
+            menu += '<li%s><a href="%s">%s</a><ul>%s</ul></li>' % (act, full_uri, label, _menuing(sub, full_uri))
+        else:
+            menu += '<li%s><a href="%s">%s</a></li>' % (act, full_uri, label)
     return menu
 
 
