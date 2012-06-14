@@ -14,6 +14,7 @@ MENU_MOCK = (
                 ('admin', 'Admin', None, 'is_admin'),
             )
 
+
 class UserMock(object):
     def __init__(self, username):
         self.username = username
@@ -24,11 +25,13 @@ class UserMock(object):
             return True
         return False
 
+
 class RequestMock(object):
     def __init__(self, path, user):
         self.path = path
-        self.user = user            
- 
+        self.user = user
+
+
 class ContextProcessorsTests(TestCase):
 
     def setUp(self):
