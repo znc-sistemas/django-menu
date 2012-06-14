@@ -6,7 +6,6 @@ register = template.Library()
 def _menuing(raw_menu, old_link=''):
     menu = ''
 
-    print raw_menu
     for uri, label, sub, active in raw_menu:
 
         if active:
