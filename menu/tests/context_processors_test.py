@@ -1,7 +1,7 @@
 from django.test import TestCase
 from mock import patch
 
-import context_processors
+from menu import context_processors
 
 MENU_MOCK = (
                 ('home', 'Home', None),
