@@ -17,10 +17,10 @@ def _menuing(raw_menu, old_uri=None):
 
         if isinstance(sub, list):
             # is a real submenu
-            menu += '<li%s><a href="%s">%s</a><ul>%s</ul></li>' % (act, full_uri, label, _menuing(sub, full_uri))
+            menu += '<li%s><a href="%s">%s</a>%s</li>' % (act, full_uri, label, _menuing(sub, full_uri))
         else:
             menu += '<li%s><a href="%s">%s</a></li>' % (act, full_uri, label)
-    return menu
+    return '<ul>%s</ul>' % menu
 
 
 def do_menu(parser, token):
