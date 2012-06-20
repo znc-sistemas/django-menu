@@ -21,15 +21,19 @@ def _menuing(raw_menu, old_link=''):
             menu += '<li%s><a href="%s">%s</a></li>' % (act, '%s/%s' % (old_link, uri), label)
     return menu
 
+
 def do_menu(parser, token):
     return MenuNode()
+
 
 def do_submenu(parser, token):
     return SubmenuNode()
 
+
 class MenuNode(template.Node):
     def render(self, context):
         return _menuing(context['menu'])
+
 
 class SubmenuNode(template.Node):
     def render(self, context):
