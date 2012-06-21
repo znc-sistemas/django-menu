@@ -6,19 +6,9 @@ register = template.Library()
 def _menuing(raw_menu, old_link=''):
     menu = ''
 
-    for uri, label, sub, active in raw_menu:
+    for name, label, uri in raw_menu:
 
-        if active:
-            act = ' class="active"'
-        else:
-            act = ''
-
-        if isinstance(sub, tuple):
-            # is submenu, so, I use label in link field
-            old_link = '%s/%s' % (old_link, label.lower())
-            menu += '<li%s><a href="%s">%s</a><ul>%s</ul></li>' % (act, old_link, label, _menuing(uri, old_link))
-        else:
-            menu += '<li%s><a href="%s">%s</a></li>' % (act, '%s/%s' % (old_link, uri), label)
+            menu += '<li%s><a href="%s">%s</a></li>' % ('', uri, label)
     return menu
 
 
