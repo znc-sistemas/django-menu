@@ -73,6 +73,7 @@ def get_submenu(path, menu,  path_menu=''):
     return menu_items
 
 
+
 def menu(request):
     #return {'menu': _check_permissions(request, _prepare_menu(path, raw_menu))}
     return {'menu': get_submenu("/", settings.MENU)}

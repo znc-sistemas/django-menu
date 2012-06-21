@@ -23,18 +23,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 Setting up
 ==========
 
-To set up your menu:
-
 ```python
 MENU = (
-            ('Link name', 'Link', 'Link permission (optional)'),
-        )
-```
-
-To use a submenu:
-
-```python
-MENU = (
-            ('Link name', (('Submenu', 'submenu', 'Link permission (optional)'),), 'Link permission (optional)'),
+            ('URI', 'Label',
+            	(
+            		('Submenu', 'submenu', None, 'Link permission (optional)'),
+            	), 'Link permission (optional)'),
+            # Or
+            ('URI', 'Label', None, 'Link permission (optional)'),
         )
 ```

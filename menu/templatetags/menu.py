@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 
-def _menuing(raw_menu, old_link=''):
+def _menuing(raw_menu, old_uri=None):
     menu = ''
 
     for name, label, uri in raw_menu:
