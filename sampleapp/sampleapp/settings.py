@@ -167,7 +167,11 @@ LOGGING = {
 
 MENU = (
    '', '', (
-       ('menu1', 'menu 1', None),
+       ('menu1', 'menu 1', (
+           ('menu11', 'menu1 sub1', None),
+           ('menu12', 'menu1 sub2', None)
+           )
+       ),
        ('menu2', 'menu 2', (
            ('menu21', 'menu2 sub1', None),
            ('menu22', 'menu2 sub2', None)

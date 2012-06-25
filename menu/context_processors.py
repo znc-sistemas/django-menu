@@ -31,7 +31,11 @@ if __name__ == "__main__":
 
 MENU = (
    '', '', (
-       ('menu1', 'menu 1', None),
+       ('menu1', 'menu 1', (
+           ('menu11', 'menu1 sub1', None),
+           ('menu12', 'menu1 sub2', None)
+           )
+        ),
        ('menu2', 'menu 2', (
            ('menu21', 'menu2 sub1', None),
            ('menu22', 'menu2 sub2', None)
@@ -56,12 +60,12 @@ MENU = (
 
 def get_submenu(path, menu,  path_menu=''):
     '''
-    '/music/bands/the_beatles/' =  ['', 'music', 'bands', 'the_beatles', '']
+
     '''
     # active = False
     menu_items = []
     sub_menu = None
-    if menu[2] is not None:
+    if menu[2] is not None:  # check if it have  a submenu
         for menu_item in menu[2]:
             url_menu = "%s/%s" % (path_menu, menu_item[0])
             if path.find(url_menu) == 0:
@@ -71,7 +75,6 @@ def get_submenu(path, menu,  path_menu=''):
         if sub_menu:
             menu_items = get_submenu(path, sub_menu, path_menu)
     return menu_items
-
 
 
 def menu(request):
