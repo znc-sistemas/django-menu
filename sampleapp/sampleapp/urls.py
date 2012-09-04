@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'sampleapp.views.home', name='home'),
     url(r'^menu./', 'sampleapp.views.home', name='home'),
+    url(r'^menu2/', 'sampleapp.views.home', name='home'),
     # url(r'^sampleapp/', include('sampleapp.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
