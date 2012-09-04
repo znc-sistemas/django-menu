@@ -172,15 +172,17 @@ MENU = (
            ('menu12', 'menu1 sub2', None)
            )
        ),
-       ('menu2', 'menu 2', (
-           ('menu21', 'menu2 sub1', None),
-           ('menu22', 'menu2 sub2', None)
+       ('gestao', 'menu 2', (
+           ('projetos', 'menu2 sub1', None),
+           ('menu22', 'menu2 sub2', None),
+           ('menu33', 'menu3 sub3', (
+            ('menu331', 'menu33 sub1', None),
            )
            ),
-       ('menu3', 'menu 3', (
-           ('menu31', 'menu3 sub1', None),
-           ('menu32', 'menu3 sub2', None),
-           ('menu33', 'menu3 sub3', (
+       ('criacao', 'menu 3', (
+           ('projetos', 'menu3 sub1', None),
+           ('_oficio', 'menu3 sub2', None),
+           ('_menu33', 'menu3 sub3', (
                ('menu331', 'menu33 sub1', None),
                ('menu332', 'menu33 sub2', None),
                ('menu333', 'menu33 sub3', None)
@@ -190,3 +192,8 @@ MENU = (
            ),
        ('menu4', 'menu 4', None),)
    )
+
+'''
+gestao/projetos
+criacao/projetos
+'''
