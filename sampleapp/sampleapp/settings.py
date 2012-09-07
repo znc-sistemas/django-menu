@@ -117,8 +117,7 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
-    'menu.context_processors.menu',
-    'menu.context_processors.submenu',
+    'menu.context_processors.request_path',
 )
 
 INSTALLED_APPS = (
